@@ -3,20 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Template</title>
+    <title>Cookie Examples</title>
 </head>
 <body>
-    <h1>Bine ai venit la lab</h1>
-    <button onclick="alertCookie()">Afișează cookie-uri</button>
+    <h1>Welcome to the Cookie Lab</h1>
+    <button onclick="alertCookie()">Show cookies</button>
 
     <script>
         function alertCookie() {
-            alert("Cookie-uri:\n" + document.cookie);
+            alert("Cookies:\n" + document.cookie);
+        }
+    </script>
+
+    <script>
+        document.cookie = "session=test GDPR";
+        document.cookie = "favorite_task=collect Data";
+    </script>
+
+    <button onclick="showCookies()">Show cookies</button>
+    <button onclick="clearOutputCookies()">Clear</button>
+
+    <div>
+        <code id="cookies"></code>
+    </div>
+
+    <button onclick="showCookieValue()">Show cookie value</button>
+    <button onclick="clearOutputCookieValue()">Clear</button>
+
+    <div>
+        <code id="cookie-value"></code>
+    </div>
+
+    <button onclick="doOnce()">Only do something once</button>
+    <button onclick="clearOutputDoOnce()">Clear</button>
+
+    <div>
+        <code id="do-once"></code>
+    </div>
+
+    <button onclick="resetOnce()">Reset only once cookie</button>
+    <button onclick="clearOutputResetOnce()">Clear</button>
+
+    <div>
+        <code id="reset-once"></code>
+    </div>
+
+    <button onclick="checkACookieExists()">Check if a cookie exists</button>
+    <button onclick="clearOutputACookieExists()">Clear</button>
+
+    <div>
+        <code id="a-cookie-existence"></code>
+    </div>
+
+    <button onclick="checkCookieHasASpecificValue()">Check if a cookie has a specific value</button>
+    <button onclick="clearASpecificValueOfTheCookie()">Clear</button>
+
+    <div>
+        <code id="a-specific-value-of-the-cookie"></code>
+    </div>
+
+    <script>
+        function showCookies() {
+            document.getElementById("cookies").innerText = "Cookies: " + document.cookie;
+        }
+
+        function clearOutputCookies() {
+            document.getElementById("cookies").innerText = "";
+        }
+
+        function showCookieValue() {
+            var cookieName = prompt("Enter cookie name:");
+            var cookieValue = getCookie(cookieName);
+            document.getElementById("cookie-value").innerText = "Cookie Value: " + cookieValue;
+        }
+
+        function clearOutputCookieValue() {
+            document.getElementById("cookie-value").innerText = "";
+        }
+
+        function getCookie(name) {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.indexOf(name) === 0) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return "";
+        }
+
+        function doOnce() {
+            if (!getCookie("once")) {
+                document.getElementById("do-once").innerText = "This action was done once.";
+                document.cookie = "once=true";
+            } else {
+                document.getElementById("do-once").innerText = "This action has already been done once.";
+            }
+        }
+
+        function clearOutputDoOnce() {
+            document.getElementById("do-once").innerText = "";
+        }
+
+        function resetOnce() {
+            document.cookie = "once=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.getElementById("reset-once").innerText = "The 'once' cookie has been reset.";
+        }
+
+        function clearOutputResetOnce() {
+            document.getElementById("reset-once").innerText = "";
+        }
+
+        function checkACookieExists() {
+            var cookieName = prompt("Enter cookie name:");
+            var exists = document.cookie.includes(cookieName);
+            document.getElementById("a-cookie-existence").innerText = "Cookie '" + cookieName + "' exists: " + exists;
+        }
+
+        function clearOutputACookieExists() {
+            document.getElementById("a-cookie-existence").innerText = "";
+        }
+
+        function checkCookieHasASpecificValue() {
+            var cookieName = prompt("Enter cookie name:");
+            var cookieValue = prompt("Enter expected value:");
+            var exists = document.cookie.includes(cookieName + "=" + cookieValue);
+            document.getElementById("a-specific-value-of-the-cookie").innerText = "Cookie '" + cookieName + "' has value '" + cookieValue + "': " + exists;
+        }
+
+        function clearASpecificValueOfTheCookie() {
+            document.getElementById("a-specific-value-of-the-cookie").innerText = "";
         }
     </script>
 </body>
 </html>
-<script>
-    document.cookie = "session=test GDPR";
-    document.cookie = "favorite_task=collect Data";
-</script>
